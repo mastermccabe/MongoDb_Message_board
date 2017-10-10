@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type="text/javascript" src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+  <script src=" https://code.jquery.com/jquery-3.2.1.slim.min.js "></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js ">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js">
+  </script>
+  <meta charset="utf-8">
+  <title>messageboard</title>
+</head>
+
+<body>
+  <div id="wrapper" class="container">
+    <h1>MessageBoard</h1>
+    <form action="/postmessage" class="col-xs-4 col-md-4" id="form" method="post">
+      <div class="form-group"><br>
+        <label for="name"><h5>Your Name</h5></label>
+        <input required type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" placeholder="Enter name">
+        <small id="nameHelp" class="form-text text-muted">We'll share your info with everyone.</small>
+      </div>
+      <label for="message">message</label>
+      <textarea class="form-control" name="message" rows="3"></textarea>
+      <!-- <input type="text" name="name"> --><br>
+      <button type="submit " class="btn btn-primary btn-lg active " role="button ">submit</button>
+      <!-- <a href="/message" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">see animals</a><br> -->
+    </form>
+
+    <br>
+    <hr>
+    <div id="errors" class="container">
+      <% if(typeof(errors) != 'undefined' ) { %>
+        <% for (var x in errors) { %>
+          <h3><%= errors[x].messages %></h3>
+
+          <% } %>
+            <% } %>
+    </div>
+    <div id="messages" class="container">
+      <% if(typeof(posts) != 'undefined' ) { %>
+        <% for (var i in posts) { %>
+
+          <h3> <%= posts[i].name %>'s Post </h3>
+          <h5>
+            <%= posts[i].text %>
+
+          </h5>
+          <p>
+            <%= posts[i].created_at %>
+              <p>
+
+                <hr>
+                <% for (var x= 0; x < posts[i].comments.length; x++){ %>
+                  <h6>
+
+                    <%= posts[i].comments[x].name %>
+                  </h6>
+
+                  <p>
+                    <%= posts[i].comments[x].text %> -
+                      <%= posts[i].comments[x].created_at %>
+                  </p>
+
+                  <hr>
+
+                  <% } %>
+
+
+                    <form action="/posts/<%= posts[i].id %>" class="col-xs-4 col-md-4" id="form" method="post">
+                      <div class="form-group"><br>
+
+                        <input required type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" placeholder="Enter name">
+
+                      </div>
+                      <!-- <label for="comment">comment</label> -->
+                      <textarea class="form-control" name="text" rows="3" placeholder="Enter comment"></textarea>
+                      <!-- <input type="text" name="name"> --><br>
+                      <button type="submit " class="btn btn-primary btn-sm active " role="button ">submit</button>
+                      <!-- <a href="/message" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">see animals</a><br> -->
+                    </form>
+                    <hr>
+                    <% } %>
+                      <% } %>
+    </div>
+  </div>
+
+
+</body>
+
+</html>
